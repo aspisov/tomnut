@@ -109,19 +109,19 @@ bash preprocessing/gsm_icot.bash
 First train the model with CoT (as the stage 0 training)
 
 ```bash
-torchrun --nnodes 1 --nproc_per_node 4 run.py args/gsm_cot.yaml
+uv run torchrun --nnodes 1 --nproc_per_node 4 run.py args/gsm_cot.yaml
 ```
 
 Select a checkpoint as the initialization of Coconut (the validation accuracy is expected to be around 40%). Replace the `load_model_path` in the [args/gsm_coconut.yaml](args/gsm_coconut.yaml) with your selected checkpoint, and run:
 
 ```bash
-torchrun --nnodes 1 --nproc_per_node 4 run.py args/gsm_coconut.yaml
+uv run torchrun --nnodes 1 --nproc_per_node 4 run.py args/gsm_coconut.yaml
 ```
 
 Find the checkpoint with best validation accuracy, and put the path as `load_model_path` in [args/gsm_coconut_eval.yaml](args/gsm_coconut_eval.yaml). To evaluate:
 
 ```bash
-torchrun --nnodes 1 --nproc_per_node 4 run.py args/gsm_coconut_eval.yaml
+uv run torchrun --nnodes 1 --nproc_per_node 4 run.py args/gsm_coconut_eval.yaml
 ```
 
 ### ProntoQA
@@ -130,25 +130,25 @@ Please clone the official [github repo](https://github.com/asaparov/prontoqa/tre
 
 ```bash
 cd prontoqa
-python run_experiment.py --model-name json --model-size dummy --ordering random --num-trials 10000 --few-shot-examples 0 --ontology fictional --min-hops 5 --max-hops 5 --hops-skip 1
+uv run python run_experiment.py --model-name json --model-size dummy --ordering random --num-trials 10000 --few-shot-examples 0 --ontology fictional --min-hops 5 --max-hops 5 --hops-skip 1
 ```
 
 Then copy the generated `5hop_0shot_random.json` file to `data` directory, and preprocess the dataset with:
 
 ```bash
-python preprocessing/prontoqa.py
+uv run python preprocessing/prontoqa.py
 ```
 
 
 Then run the following to train the model:
 ```bash
-torchrun --nnodes 1 --nproc_per_node 4 run.py args/prontoqa_coconut.yaml
+uv run torchrun --nnodes 1 --nproc_per_node 4 run.py args/prontoqa_coconut.yaml
 ```
 
 Find the checkpoint with best validation accuracy, and put the path as `load_model_path` in [args/prosqa_coconut_eval.yaml](args/prosqa_coconut_eval.yaml). To evaluate:
 
 ```bash
-torchrun --nnodes 1 --nproc_per_node 4 run.py args/prosqa_coconut_eval.yaml
+uv run torchrun --nnodes 1 --nproc_per_node 4 run.py args/prosqa_coconut_eval.yaml
 ```
 
 
@@ -158,13 +158,13 @@ The ProsQA dataset is at [data/prosqa_*.json](data).
 
 Then run the following to train the model:
 ```bash
-torchrun --nnodes 1 --nproc_per_node 4 run.py args/prosqa_coconut.yaml
+uv run torchrun --nnodes 1 --nproc_per_node 4 run.py args/prosqa_coconut.yaml
 ```
 
 Find the checkpoint with best validation accuracy, and put the path as `load_model_path` in [args/prosqa_coconut_eval.yaml](args/prosqa_coconut_eval.yaml). To evaluate:
 
 ```bash
-torchrun --nnodes 1 --nproc_per_node 4 run.py args/prosqa_coconut_eval.yaml
+uv run torchrun --nnodes 1 --nproc_per_node 4 run.py args/prosqa_coconut_eval.yaml
 ```
 
 
